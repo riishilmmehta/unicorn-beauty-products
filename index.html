@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unicorn Beauty</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffe4ec, #fff);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .home-container {
+      text-align: center;
+      animation: fadeIn 2s ease;
+    }
+
+    .home-container h1 {
+      font-size: 3rem;
+      color: #ff69b4;
+      animation: glow 2s infinite alternate;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px #ffb6c1;
+    }
+
+    .home-container button {
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .home-container button:hover {
+      background: #ff85c1;
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffc0cb, 0 0 20px #ff69b4; }
+      to { text-shadow: 0 0 20px #ff69b4, 0 0 30px #ff1493; }
+    }
+  </style>
+</head>
+<body>
+  <div class="home-container">
+    <h1>Unicorn Beauty Products</h1>
+    <button onclick="window.location.href='shop.html'">Shop Now</button>
+  </div>
+</body>
+</html>
