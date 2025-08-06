@@ -1,52 +1,108 @@
-<!-- Example: Updated Product Cards -->
-<div class="product-grid">
-  <a href="product.html?id=cool-coconut-hair-oil">
-    <img src="images/coconut-oil.jpg" alt="Cool Coconut Hair Oil" />
-    <h3>Cool Coconut Hair Oil</h3>
-  </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop - Unicorn Beauty</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+    }
 
-  <a href="product.html?id=charcoal-soap">
-    <img src="images/charcoal-soap.jpg" alt="Charcoal Soap" />
-    <h3>Charcoal Soap</h3>
-  </a>
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background: linear-gradient(to right, #ff8ec7, #ddaaff);
+      padding: 1rem 2rem;
+    }
 
-  <a href="product.html?id=lemongrass-oil">
-    <img src="images/lemongrass-oil.jpg" alt="Lemongrass Oil" />
-    <h3>Lemongrass Oil</h3>
-  </a>
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+    }
 
-  <a href="product.html?id=aloe-vera-gel">
-    <img src="images/aloe-vera-gel.jpg" alt="Aloe Vera Gel" />
-    <h3>Aloe Vera Gel</h3>
-  </a>
+    .shop-hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #d63384;
+      background: #fff0f9;
+    }
 
-  <a href="product.html?id=jasmine-soap">
-    <img src="images/jasmine-soap.jpg" alt="Jasmine Soap" />
-    <h3>Jasmine Soap</h3>
-  </a>
+    .shop-hero h1 {
+      font-size: 2.5rem;
+    }
 
-  <a href="product.html?id=lavender-soap">
-    <img src="images/lavender-soap.jpg" alt="Lavender Soap" />
-    <h3>Lavender Soap</h3>
-  </a>
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-  <a href="product.html?id=coffee-soap">
-    <img src="images/coffee-soap.jpg" alt="Coffee Soap" />
-    <h3>Coffee Soap</h3>
-  </a>
+    .product-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.3s ease;
+    }
 
-  <a href="product.html?id=rose-soap">
-    <img src="images/rose-soap.jpg" alt="Rose Soap" />
-    <h3>Rose Soap</h3>
-  </a>
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
 
-  <a href="product.html?id=aloe-vera-soap">
-    <img src="images/aloe-vera-soap.jpg" alt="Aloe Vera Soap" />
-    <h3>Aloe Vera Soap</h3>
-  </a>
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
 
-  <a href="product.html?id=turmeric-soap">
-    <img src="images/turmeric-soap.jpg" alt="Turmeric Soap" />
-    <h3>Turmeric Soap</h3>
-  </a>
-</div>
+    .product-card h3 {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #d63384;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="cart.html">My Cart</a>
+  </div>
+
+  <div class="shop-hero">
+    <h1>Explore Our Beauty Products</h1>
+  </div>
+
+  <div class="product-grid" id="shop-products">
+    <!-- Products inserted here -->
+  </div>
+
+  <script src="products.js"></script>
+  <script>
+    const container = document.getElementById("shop-products");
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <a href="product.html?id=${product.id}">
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+        </a>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
