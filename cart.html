@@ -3,50 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Cart - Unicorn</title>
+  <title>Cart - Unicorn Beauty</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #d63384;
+      margin-left: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #ff69b4;
+    }
+
+    .cart-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+    }
+
+    .cart-item img {
+      width: 100px;
+      border-radius: 10px;
+      margin-right: 20px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-info h3 {
+      color: #d63384;
+      margin: 0;
+    }
+
+    .cart-item-info p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .total {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 class="brand">🦄 Unicorn Beauty</h1>
-    <a href="shop.html" class="cart-button">Back to Shop</a>
-  </header>
 
-  <main>
-    <h2 class="section-title">Your Cart</h2>
-    <div id="cart-items"></div>
-    <h3 id="total"></h3>
-  </main>
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">My Cart</a>
+  </div>
 
-  <script src="products.js"></script>
+  <div class="cart-container" id="cart-items"></div>
+
+  <script src="productdata.js"></script>
   <script>
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
     const cartContainer = document.getElementById("cart-items");
-    const totalEl = document.getElementById("total");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let total = 0;
 
-    if (cartData.length === 0) {
-      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<h2>Your cart is empty</h2>";
     } else {
-      let total = 0;
-      cartData.forEach(item => {
-        const product = products.find(p => p.id === item.id);
-        const itemTotal = product.price * item.qty;
-        total += itemTotal;
-
+      cart.forEach(item => {
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
-          <div>
-            <h4>${product.name}</h4>
-            <p>Qty: ${item.qty}</p>
-            <p>Price: ₹${product.price} x ${item.qty} = ₹${itemTotal}</p>
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-item-info">
+            <h3>${item.name}</h3>
+            <p>Price: ₹${item.price}</p>
+            <p>Quantity: ${item.quantity}</p>
           </div>
         `;
+        total += item.price * item.quantity;
         cartContainer.appendChild(div);
       });
 
-      totalEl.textContent = `Total: ₹${total}`;
+      const totalDiv = document.createElement("div");
+      totalDiv.className = "total";
+      totalDiv.textContent = `Total: ₹${total}`;
+      cartContainer.appendChild(totalDiv);
     }
   </script>
 </body>
