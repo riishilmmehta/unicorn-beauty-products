@@ -5,11 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Detail - Unicorn</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #ff69b4, #dda0dd, #87cefa);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      color: white;
+      margin-left: 15px;
+      font-weight: bold;
+      border: 2px solid white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: white;
+      color: #d63384;
+    }
+
+    .product-detail-card {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-detail-card img {
+      width: 300px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .detail-info {
+      max-width: 500px;
+    }
+
+    .detail-info h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #d63384;
+    }
+
+    .detail-info p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .detail-info h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .detail-info button {
+      background-color: #d63384;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .detail-info button:hover {
+      background-color: #ff1493;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 100px 20px;
+      font-size: 24px;
+      color: red;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1 class="brand">🦄 Unicorn Beauty</h1>
-    <a href="cart.html" class="cart-button">My Cart</a>
+    <div class="brand">🦄 Unicorn Beauty</div>
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="cart.html">My Cart</a>
+    </div>
   </header>
 
   <main id="product-detail">
@@ -37,7 +144,7 @@
         </div>
       `;
     } else {
-      container.innerHTML = "<p>No Data Found</p>";
+      container.innerHTML = "<div class='no-data'>No Data Found</div>";
     }
 
     function addToCart(id) {
