@@ -5,34 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shop - Unicorn Beauty</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #d63384;
+      margin-left: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #ff69b4;
+    }
+
+    .shop-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-card h3 {
+      color: #d63384;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 class="brand">🦄 Unicorn Beauty</h1>
-    <a href="cart.html" class="cart-button">My Cart</a>
-  </header>
 
-  <main>
-    <h2 class="section-title">Our Products</h2>
-    <div class="product-grid" id="product-list">
-      <!-- Products will be dynamically inserted here -->
-    </div>
-  </main>
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">My Cart</a>
+  </div>
 
-  <script src="products.js"></script>
+  <div class="shop-container" id="product-list"></div>
+
+  <script src="productdata.js"></script>
   <script>
     const productList = document.getElementById("product-list");
 
     products.forEach(product => {
-      const div = document.createElement("div");
-      div.className = "product-card";
-      div.innerHTML = `
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
         <a href="product.html?id=${product.id}">
-          <img src="${product.image}" alt="${product.name}">
+          <img src="${product.image}" alt="${product.name}" />
           <h3>${product.name}</h3>
         </a>
       `;
-      productList.appendChild(div);
+      productList.appendChild(card);
     });
   </script>
 </body>
