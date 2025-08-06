@@ -6,101 +6,213 @@
   <title>My Cart - Unicorn Beauty</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .navbar {
+    body {
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
       display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      padding: 15px;
-      background: white;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, #f9e1ff, #fcefff);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .navbar button {
-      padding: 10px 20px;
-      background: #ff66cc;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+
+    header h1 {
+      font-size: 1.5rem;
+      color: #cc00cc;
+      font-weight: 700;
+    }
+
+    header nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #aa00aa;
       font-weight: bold;
-      transition: 0.3s;
     }
-    .navbar button:hover {
-      background: #e60073;
+
+    .container {
+      padding: 2rem;
     }
-    .cart-container {
-      padding: 20px;
-      background: #fff;
-    }
+
     .cart-item {
+      background: #ffffff;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
-      gap: 20px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 10px;
+      gap: 1rem;
     }
+
     .cart-item img {
       width: 100px;
-      height: auto;
-      border-radius: 10px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
     }
-    .cart-details {
-      flex: 1;
+
+    .cart-item-details h3 {
+      margin: 0;
+      color: #aa00aa;
     }
-    .total {
-      font-size: 18px;
+
+    .cart-item-details p {
+      margin: 4px 0;
+    }
+
+    #totalPrice {
+      font-size: 1.2rem;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 1rem;
     }
-    .order-form {
-      margin-top: 30px;
+
+    .form-section {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .form-section h2 {
+      color: #990099;
+    }
+
+    .form-section input {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #placeOrderBtn {
+      background: #ff66cc;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    #placeOrderBtn:hover {
+      background: #e055b3;
     }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <button onclick="location.href='index.html'">Home</button>
-    <button onclick="location.href='shop.html'">Shop</button>
-    <button onclick="location.href='cart.html'">My Cart</button>
+
+<header>
+  <h1>Unicorn Beauty</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">My Cart</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <div id="totalPrice">Total: ₹0</div>
+
+  <div class="form-section">
+    <h2>Order Details</h2>
+    <input type="text" id="customerName" placeholder="Your Name" required />
+    <input type="text" id="customerAddress" placeholder="Your Address" required />
+    <input type="tel" id="customerPhone" placeholder="Your Phone Number" required />
+    <div id="orderDetails" style="display:none;"></div>
+    <button id="placeOrderBtn">Place Order</button>
   </div>
+</div>
 
-  <div class="cart-container" id="cartItemsContainer">
-    <!-- Cart items will be injected here -->
-  </div>
+<script src="products.js"></script>
+<script>
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartContainer = document.getElementById("cartItems");
+  const orderDetails = document.getElementById("orderDetails");
+  let total = 0;
+  let orderText = "";
 
-  <div class="total" id="totalPrice">Total: ₹0</div>
+  function getProductById(id) {
+    return products.find(p => p.id === id);
+  }
 
-  <div class="order-form">
-    <h3>Place Order:</h3>
-    <iframe src="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_LINK_HERE/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-  </div>
-
-  <script src="products.js"></script>
-  <script>
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    const container = document.getElementById('cartItemsContainer');
-    const totalPriceEl = document.getElementById('totalPrice');
-
-    let total = 0;
-
-    cartItems.forEach(id => {
-      const product = products.find(p => p.id === id);
+  if (cartItems.length === 0) {
+    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+  } else {
+    cartItems.forEach((cartItem, index) => {
+      const product = getProductById(cartItem.id);
       if (product) {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'cart-item';
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
         itemDiv.innerHTML = `
-          <img src="${product.image}" alt="${product.name}">
-          <div class="cart-details">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="cart-item-details">
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>Price: ₹${product.price}</p>
           </div>
         `;
-        container.appendChild(itemDiv);
+        cartContainer.appendChild(itemDiv);
+
         total += product.price;
+        orderText += `${index + 1}. ${product.name} - ₹${product.price}\n`;
       }
     });
+  }
 
-    totalPriceEl.textContent = `Total: ₹${total}`;
-  </script>
+  document.getElementById("totalPrice").textContent = "Total: ₹" + total;
+  orderDetails.textContent = orderText;
+
+  document.getElementById("placeOrderBtn").addEventListener("click", function () {
+    const name = document.getElementById("customerName").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const orderDetailsText = orderDetails.textContent;
+    const totalPrice = document.getElementById("totalPrice").textContent;
+
+    if (!name || !address || !phone) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/formResponse";
+
+    const formData = new URLSearchParams();
+    formData.append("entry.827206533", name);
+    formData.append("entry.356442838", address);
+    formData.append("entry.691750688", phone);
+    formData.append("entry.1848509211", orderDetailsText);
+    formData.append("entry.670221473", totalPrice);
+
+    fetch(formURL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    })
+    .then(() => {
+      alert("Order placed successfully!");
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      alert("There was an error placing your order. Please try again.");
+      console.error("Error:", error);
+    });
+  });
+</script>
+
 </body>
 </html>
