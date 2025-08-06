@@ -7,187 +7,143 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      background: #fff0f5;
-      font-family: 'Segoe UI', sans-serif;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      color: #333;
       margin: 0;
       padding: 0;
     }
-
-    header {
+    .navbar {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: linear-gradient(90deg, #f9e1ff, #fcefff);
+      justify-content: flex-end;
+      gap: 15px;
+      padding: 15px;
+      background: linear-gradient(to right, #ff99cc, #cc99ff);
+    }
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background-color: #333;
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #cc00cc;
+    }
+    .cart-items {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      background-color: #f9f9f9;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    header h1 {
-      font-size: 1.5rem;
-      color: #cc00cc;
-      font-weight: 700;
-    }
-
-    header nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: #aa00aa;
-      font-weight: bold;
-    }
-
-    .container {
-      padding: 2rem;
-    }
-
     .cart-item {
-      background: #ffffff;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
     }
-
-    .cart-item h3 {
-      margin: 0 0 0.5rem 0;
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 20px;
     }
-
-    #totalPrice {
-      font-size: 1.2rem;
+    .cart-details {
+      flex: 1;
+    }
+    .cart-details h3 {
+      margin: 0;
+      color: #cc00cc;
+    }
+    .cart-details p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .total {
+      text-align: right;
+      font-size: 20px;
       font-weight: bold;
-      margin-top: 1rem;
+      color: #333;
+      margin-top: 20px;
     }
-
-    .form-section {
-      margin-top: 2rem;
-      background: #fff;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .place-order {
+      text-align: center;
+      margin-top: 30px;
     }
-
-    .form-section h2 {
-      color: #990099;
-    }
-
-    .form-section input {
-      width: 100%;
-      padding: 10px;
-      margin: 0.5rem 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    #placeOrderBtn {
-      background: #ff66cc;
+    .place-order a {
+      background-color: #cc00cc;
       color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-
-    #placeOrderBtn:hover {
-      background: #e055b3;
+    .place-order a:hover {
+      background-color: #9900cc;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Unicorn Beauty</h1>
-  <nav>
+  <div class="navbar">
     <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
     <a href="cart.html">My Cart</a>
-  </nav>
-</header>
-
-<div class="container">
-  <h2>Your Cart</h2>
-  <div id="cartItems"></div>
-  <div id="totalPrice">Total: ₹0</div>
-
-  <div class="form-section">
-    <h2>Order Details</h2>
-    <input type="text" id="customerName" placeholder="Your Name" required />
-    <input type="text" id="customerAddress" placeholder="Your Address" required />
-    <input type="tel" id="customerPhone" placeholder="Your Phone Number" required />
-    <div id="orderDetails" style="display:none;"></div>
-    <button id="placeOrderBtn">Place Order</button>
   </div>
-</div>
 
-<script>
-  // Load cart data from localStorage
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartContainer = document.getElementById("cartItems");
-  const orderDetails = document.getElementById("orderDetails");
-  let total = 0;
-  let orderText = "";
+  <h1>My Cart</h1>
 
-  if (cartItems.length === 0) {
-    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-  } else {
-    cartItems.forEach((item, index) => {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "cart-item";
-      itemDiv.innerHTML = `
-        <h3>${item.name}</h3>
-        <p>Price: ₹${item.price}</p>
-      `;
-      cartContainer.appendChild(itemDiv);
+  <div class="cart-items" id="cart-items"></div>
+  <div class="total" id="total"></div>
 
-      total += item.price;
-      orderText += `${index + 1}. ${item.name} - ₹${item.price}\n`;
-    });
-  }
+  <div class="place-order">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/viewform" target="_blank">
+      Place Order
+    </a>
+  </div>
 
-  document.getElementById("totalPrice").textContent = "Total: ₹" + total;
-  orderDetails.textContent = orderText;
+  <script src="products.js"></script>
+  <script>
+    const cartContainer = document.getElementById('cart-items');
+    const totalDisplay = document.getElementById('total');
 
-  // Submit to Google Form
-  document.getElementById("placeOrderBtn").addEventListener("click", function () {
-    const name = document.getElementById("customerName").value.trim();
-    const address = document.getElementById("customerAddress").value.trim();
-    const phone = document.getElementById("customerPhone").value.trim();
-    const orderDetailsText = orderDetails.textContent;
-    const totalPrice = document.getElementById("totalPrice").textContent;
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    if (!name || !address || !phone) {
-      alert("Please fill in all required fields.");
-      return;
+    let total = 0;
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+      totalDisplay.textContent = "";
+    } else {
+      cart.forEach(id => {
+        const product = products.find(p => p.id == id);
+        if (product) {
+          total += product.price;
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('cart-item');
+
+          itemDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" />
+            <div class="cart-details">
+              <h3>${product.name}</h3>
+              <p>${product.description}</p>
+              <p>Price: ₹${product.price}</p>
+            </div>
+          `;
+          cartContainer.appendChild(itemDiv);
+        }
+      });
+
+      totalDisplay.textContent = `Total: ₹${total}`;
     }
-
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/formResponse";
-
-    const formData = new URLSearchParams();
-    formData.append("entry.827206533", name);
-    formData.append("entry.356442838", address);
-    formData.append("entry.691750688", phone);
-    formData.append("entry.1848509211", orderDetailsText);
-    formData.append("entry.670221473", totalPrice);
-
-    fetch(formURL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formData.toString(),
-    })
-    .then(() => {
-      alert("Order placed successfully!");
-      localStorage.removeItem("cart");
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert("There was an error placing your order. Please try again.");
-      console.error("Error:", error);
-    });
-  });
-</script>
-
+  </script>
 </body>
 </html>
