@@ -45,25 +45,24 @@
       margin-bottom: 1rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      position: relative;
     }
 
-    .cart-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
+    .cart-item h3 {
+      margin: 0 0 0.5rem 0;
     }
 
-    .cart-item-details h3 {
-      margin: 0;
-      color: #aa00aa;
-    }
-
-    .cart-item-details p {
-      margin: 4px 0;
+    .remove-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
 
     #totalPrice {
@@ -134,50 +133,52 @@
   </div>
 </div>
 
-<script src="products.js"></script>
 <script>
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartContainer = document.getElementById("cartItems");
-  const orderDetails = document.getElementById("orderDetails");
-  let total = 0;
-  let orderText = "";
+  function renderCart() {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartContainer = document.getElementById("cartItems");
+    const orderDetails = document.getElementById("orderDetails");
+    cartContainer.innerHTML = "";
+    orderDetails.textContent = "";
+    let total = 0;
+    let orderText = "";
 
-  function getProductById(id) {
-    return products.find(p => p.id === id);
-  }
-
-  if (cartItems.length === 0) {
-    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-  } else {
-    cartItems.forEach((cartItem, index) => {
-      const product = getProductById(cartItem.id);
-      if (product) {
+    if (cartItems.length === 0) {
+      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+      cartItems.forEach((item, index) => {
         const itemDiv = document.createElement("div");
         itemDiv.className = "cart-item";
         itemDiv.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" />
-          <div class="cart-item-details">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <p>Price: ₹${product.price}</p>
-          </div>
+          <h3>${item.name}</h3>
+          <p>Price: ₹${item.price}</p>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
         `;
         cartContainer.appendChild(itemDiv);
 
-        total += product.price;
-        orderText += `${index + 1}. ${product.name} - ₹${product.price}\n`;
-      }
-    });
+        total += item.price;
+        orderText += `${index + 1}. ${item.name} - ₹${item.price}\n`;
+      });
+    }
+
+    document.getElementById("totalPrice").textContent = "Total: ₹" + total;
+    orderDetails.textContent = orderText;
   }
 
-  document.getElementById("totalPrice").textContent = "Total: ₹" + total;
-  orderDetails.textContent = orderText;
+  function removeItem(index) {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    cartItems.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    renderCart(); // Refresh UI
+  }
+
+  renderCart();
 
   document.getElementById("placeOrderBtn").addEventListener("click", function () {
     const name = document.getElementById("customerName").value.trim();
     const address = document.getElementById("customerAddress").value.trim();
     const phone = document.getElementById("customerPhone").value.trim();
-    const orderDetailsText = orderDetails.textContent;
+    const orderDetailsText = document.getElementById("orderDetails").textContent;
     const totalPrice = document.getElementById("totalPrice").textContent;
 
     if (!name || !address || !phone) {
