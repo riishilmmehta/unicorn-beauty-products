@@ -2,147 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Cart - Unicorn Beauty</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      background-color: white;
-      font-family: Arial, sans-serif;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      background: #fff;
+      color: #333;
     }
     .navbar {
       display: flex;
       justify-content: flex-end;
-      gap: 15px;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
       padding: 15px;
-      background: linear-gradient(to right, #ff99cc, #cc99ff);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .navbar a {
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      background-color: #333;
+    .navbar button {
+      margin-left: 10px;
       padding: 10px 15px;
+      border: none;
       border-radius: 10px;
+      background-color: #fff;
+      color: #ff1493;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .navbar button:hover {
+      background-color: #ff1493;
+      color: #fff;
     }
     h1 {
       text-align: center;
-      margin-top: 20px;
-      color: #cc00cc;
+      margin: 20px 0;
+      color: #ff1493;
     }
     .cart-items {
       max-width: 800px;
-      margin: 30px auto;
+      margin: auto;
       padding: 20px;
-      border-radius: 15px;
-      background-color: #f9f9f9;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     .cart-item {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0;
+      gap: 20px;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 15px;
+      background: #fef2f5;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
     .cart-item img {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-right: 20px;
+      border-radius: 10px;
     }
-    .cart-details {
+    .cart-item-details {
       flex: 1;
-    }
-    .cart-details h3 {
-      margin: 0;
-      color: #cc00cc;
-    }
-    .cart-details p {
-      margin: 5px 0;
-      font-size: 14px;
     }
     .total {
       text-align: right;
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
+      font-size: 1.2rem;
       margin-top: 20px;
-    }
-    .place-order {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .place-order a {
-      background-color: #cc00cc;
-      color: white;
-      padding: 12px 20px;
-      text-decoration: none;
-      border-radius: 10px;
       font-weight: bold;
-      transition: background 0.3s;
     }
-    .place-order a:hover {
-      background-color: #9900cc;
+    iframe {
+      display: block;
+      margin: 30px auto;
+      width: 100%;
+      max-width: 700px;
+      height: 500px;
+      border: none;
+      border-radius: 15px;
     }
   </style>
 </head>
 <body>
-
   <div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="cart.html">My Cart</a>
+    <button onclick="location.href='index.html'">Home</button>
+    <button onclick="location.href='shop.html'">Shop</button>
+    <button onclick="location.href='cart.html'">My Cart</button>
   </div>
 
   <h1>My Cart</h1>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="total" id="totalPrice"></div>
 
-  <div class="cart-items" id="cart-items"></div>
-  <div class="total" id="total"></div>
+  <!-- Google Form (adjust link and entries as needed) -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/viewform?embedded=true" loading="lazy">Loading…</iframe>
 
-  <div class="place-order">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/viewform" target="_blank">
-      Place Order
-    </a>
-  </div>
-
-  <script src="products.js"></script>
   <script>
-    const cartContainer = document.getElementById('cart-items');
-    const totalDisplay = document.getElementById('total');
-
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const products = JSON.parse(localStorage.getItem('products')) || [];
 
     let total = 0;
+    const container = document.getElementById('cartItems');
+    const totalDiv = document.getElementById('totalPrice');
 
-    if (cart.length === 0) {
-      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-      totalDisplay.textContent = "";
+    if (cartItems.length === 0) {
+      container.innerHTML = '<p>Your cart is empty.</p>';
     } else {
-      cart.forEach(id => {
-        const product = products.find(p => p.id == id);
+      cartItems.forEach(itemId => {
+        const product = products.find(p => p.id === itemId);
         if (product) {
           total += product.price;
-          const itemDiv = document.createElement('div');
-          itemDiv.classList.add('cart-item');
-
-          itemDiv.innerHTML = `
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          div.innerHTML = `
             <img src="${product.image}" alt="${product.name}" />
-            <div class="cart-details">
+            <div class="cart-item-details">
               <h3>${product.name}</h3>
               <p>${product.description}</p>
               <p>Price: ₹${product.price}</p>
             </div>
           `;
-          cartContainer.appendChild(itemDiv);
+          container.appendChild(div);
         }
       });
 
-      totalDisplay.textContent = `Total: ₹${total}`;
+      totalDiv.textContent = `Total: ₹${total}`;
     }
   </script>
 </body>
