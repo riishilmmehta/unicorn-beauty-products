@@ -1,115 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shop - Unicorn Beauty</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
-    }
+<!-- Example: Updated Product Cards -->
+<div class="product-grid">
+  <a href="product.html?id=cool-coconut-hair-oil">
+    <img src="images/coconut-oil.jpg" alt="Cool Coconut Hair Oil" />
+    <h3>Cool Coconut Hair Oil</h3>
+  </a>
 
-    /* --- Navbar --- */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+  <a href="product.html?id=charcoal-soap">
+    <img src="images/charcoal-soap.jpg" alt="Charcoal Soap" />
+    <h3>Charcoal Soap</h3>
+  </a>
 
-    .navbar .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #ff69b4;
-      letter-spacing: 1px;
-    }
+  <a href="product.html?id=lemongrass-oil">
+    <img src="images/lemongrass-oil.jpg" alt="Lemongrass Oil" />
+    <h3>Lemongrass Oil</h3>
+  </a>
 
-    .navbar .nav-links a {
-      margin-left: 30px;
-      text-decoration: none;
-      font-size: 1.1rem;
-      color: #333;
-      transition: color 0.3s;
-    }
+  <a href="product.html?id=aloe-vera-gel">
+    <img src="images/aloe-vera-gel.jpg" alt="Aloe Vera Gel" />
+    <h3>Aloe Vera Gel</h3>
+  </a>
 
-    .navbar .nav-links a:hover {
-      color: #ff69b4;
-    }
+  <a href="product.html?id=jasmine-soap">
+    <img src="images/jasmine-soap.jpg" alt="Jasmine Soap" />
+    <h3>Jasmine Soap</h3>
+  </a>
 
-    /* --- Shop Layout --- */
-    .shop-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 50px;
-    }
+  <a href="product.html?id=lavender-soap">
+    <img src="images/lavender-soap.jpg" alt="Lavender Soap" />
+    <h3>Lavender Soap</h3>
+  </a>
 
-    .product-card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s;
-    }
+  <a href="product.html?id=coffee-soap">
+    <img src="images/coffee-soap.jpg" alt="Coffee Soap" />
+    <h3>Coffee Soap</h3>
+  </a>
 
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
+  <a href="product.html?id=rose-soap">
+    <img src="images/rose-soap.jpg" alt="Rose Soap" />
+    <h3>Rose Soap</h3>
+  </a>
 
-    .product-card img {
-      max-width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 15px;
-    }
+  <a href="product.html?id=aloe-vera-soap">
+    <img src="images/aloe-vera-soap.jpg" alt="Aloe Vera Soap" />
+    <h3>Aloe Vera Soap</h3>
+  </a>
 
-    .product-card h3 {
-      margin-top: 15px;
-      color: #333;
-      font-size: 1.1rem;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- 🌸 Navbar -->
-  <div class="navbar">
-    <div class="logo">Unicorn Beauty</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="cart.html">My Cart</a>
-    </div>
-  </div>
-
-  <!-- 🛍️ Shop Products Grid -->
-  <div class="shop-container" id="shop-items">
-    <!-- Products will be injected by JavaScript -->
-  </div>
-
-  <script src="products.js"></script>
-  <script>
-    const container = document.getElementById('shop-items');
-    products.forEach(product => {
-      const div = document.createElement('div');
-      div.className = 'product-card';
-      div.innerHTML = `
-        <a href="product.html?id=${product.id}">
-          <img src="${product.image}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-        </a>
-      `;
-      container.appendChild(div);
-    });
-  </script>
-</body>
-</html>
+  <a href="product.html?id=turmeric-soap">
+    <img src="images/turmeric-soap.jpg" alt="Turmeric Soap" />
+    <h3>Turmeric Soap</h3>
+  </a>
+</div>
