@@ -45,37 +45,24 @@
       margin-bottom: 1rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .cart-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .cart-item-details {
-      flex-grow: 1;
+      position: relative;
     }
 
     .cart-item h3 {
       margin: 0 0 0.5rem 0;
     }
 
-    .cart-item p {
-      margin: 0.25rem 0;
-    }
-
     .remove-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
       background: #ff4d4d;
       color: white;
       border: none;
+      padding: 5px 10px;
       border-radius: 6px;
-      padding: 8px 12px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
 
     #totalPrice {
@@ -147,67 +134,51 @@
 </div>
 
 <script>
-  let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartContainer = document.getElementById("cartItems");
-  const orderDetails = document.getElementById("orderDetails");
-  let total = 0;
-  let orderText = "";
-
-  function updateCartDisplay() {
+  function renderCart() {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartContainer = document.getElementById("cartItems");
+    const orderDetails = document.getElementById("orderDetails");
     cartContainer.innerHTML = "";
-    total = 0;
-    orderText = "";
+    orderDetails.textContent = "";
+    let total = 0;
+    let orderText = "";
 
     if (cartItems.length === 0) {
       cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-      document.getElementById("totalPrice").textContent = "Total: ₹0";
-      return;
+    } else {
+      cartItems.forEach((item, index) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>Price: ₹${item.price}</p>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        `;
+        cartContainer.appendChild(itemDiv);
+
+        total += item.price;
+        orderText += `${index + 1}. ${item.name} - ₹${item.price}\n`;
+      });
     }
-
-    cartItems.forEach((item, index) => {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "cart-item";
-
-      const image = item.image || "placeholder.jpg"; // fallback if image missing
-      const name = item.name || "Unnamed Product";
-      const price = item.price || 0;
-      const desc = item.description || "";
-
-      itemDiv.innerHTML = `
-        <img src="${image}" alt="${name}" />
-        <div class="cart-item-details">
-          <h3>${name}</h3>
-          <p>${desc}</p>
-          <p>Price: ₹${price}</p>
-        </div>
-        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-      `;
-
-      cartContainer.appendChild(itemDiv);
-
-      total += price;
-      orderText += `${index + 1}. ${name} - ₹${price}\n`;
-    });
 
     document.getElementById("totalPrice").textContent = "Total: ₹" + total;
     orderDetails.textContent = orderText;
   }
 
   function removeItem(index) {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     cartItems.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    updateCartDisplay();
+    renderCart(); // Refresh UI
   }
 
-  // Load cart initially
-  updateCartDisplay();
+  renderCart();
 
-  // Handle order submission
   document.getElementById("placeOrderBtn").addEventListener("click", function () {
     const name = document.getElementById("customerName").value.trim();
     const address = document.getElementById("customerAddress").value.trim();
     const phone = document.getElementById("customerPhone").value.trim();
-    const orderDetailsText = orderDetails.textContent;
+    const orderDetailsText = document.getElementById("orderDetails").textContent;
     const totalPrice = document.getElementById("totalPrice").textContent;
 
     if (!name || !address || !phone) {
