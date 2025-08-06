@@ -3,45 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Detail</title>
+  <title>Product Details - Unicorn Beauty</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      background: linear-gradient(to right, #ff8ec7, #ddaaff);
+      padding: 1rem 2rem;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+    }
+
+    .product-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      background: #fff0f9;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      display: flex;
+      padding: 30px;
+      gap: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .product-container img {
+      width: 350px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-details h2 {
+      font-size: 2rem;
+      color: #d63384;
+      margin-bottom: 15px;
+    }
+
+    .product-details p {
+      color: #444;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .add-to-cart-btn {
+      background: #d63384;
+      color: #fff;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #c2185b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-  <div class="product-detail">
-    <h1 id="product-name">Loading...</h1>
-    <img id="product-image" src="" alt="Product Image" />
-    <p id="product-description"></p>
-    <h3 id="product-price"></h3>
-    <button onclick="addToCart()">Add to Cart</button>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">My Cart</a>
+  </div>
+
+  <!-- Product Section -->
+  <div class="product-container" id="product-detail">
+    <img id="product-img" src="" alt="Product Image" />
+    <div class="product-details">
+      <h2 id="product-name">Loading...</h2>
+      <p id="product-description"></p>
+      <p class="price" id="product-price">₹0</p>
+      <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+    </div>
   </div>
 
   <script src="products.js"></script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id");
-
+    const productId = parseInt(urlParams.get('id'));
     const product = products.find(p => p.id === productId);
 
     if (product) {
+      document.getElementById("product-img").src = product.image;
       document.getElementById("product-name").textContent = product.name;
-      document.getElementById("product-image").src = product.image;
-      document.getElementById("product-image").alt = product.name;
       document.getElementById("product-description").textContent = product.description;
-      document.getElementById("product-price").textContent = "₹" + product.price;
+      document.getElementById("product-price").textContent = `₹${product.price}`;
     } else {
-      document.querySelector(".product-detail").innerHTML = "<h2>No Product Found</h2>";
+      document.getElementById("product-detail").innerHTML = "<h2 style='padding: 2rem;'>No Data Found</h2>";
     }
 
     function addToCart() {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const existing = cart.find(p => p.id === product.id);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
+      if (!existing) {
         cart.push({ ...product, quantity: 1 });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Added to cart!");
+      } else {
+        alert("Already in cart");
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert("Added to cart!");
     }
   </script>
 </body>
