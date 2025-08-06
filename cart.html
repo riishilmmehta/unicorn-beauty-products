@@ -46,25 +46,36 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       display: flex;
-      justify-content: space-between;
+      gap: 1rem;
       align-items: center;
+    }
+
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
     }
 
     .cart-item h3 {
       margin: 0 0 0.5rem 0;
     }
 
-    .remove-btn {
-      background: #ff4444;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 16px;
-      cursor: pointer;
+    .cart-item p {
+      margin: 0.25rem 0;
     }
 
-    .remove-btn:hover {
-      background: #cc0000;
+    .remove-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
     }
 
     #totalPrice {
@@ -136,36 +147,46 @@
 </div>
 
 <script>
-  function renderCart() {
-    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartContainer = document.getElementById("cartItems");
-    const orderDetails = document.getElementById("orderDetails");
-    let total = 0;
-    let orderText = "";
+  let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartContainer = document.getElementById("cartItems");
+  const orderDetails = document.getElementById("orderDetails");
+  let total = 0;
+  let orderText = "";
 
+  function updateCartDisplay() {
     cartContainer.innerHTML = "";
+    total = 0;
+    orderText = "";
 
     if (cartItems.length === 0) {
       cartContainer.innerHTML = "<p>Your cart is empty.</p>";
       document.getElementById("totalPrice").textContent = "Total: ₹0";
-      orderDetails.textContent = "";
       return;
     }
 
     cartItems.forEach((item, index) => {
       const itemDiv = document.createElement("div");
       itemDiv.className = "cart-item";
+
+      const image = item.image || "placeholder.jpg"; // fallback if image missing
+      const name = item.name || "Unnamed Product";
+      const price = item.price || 0;
+      const desc = item.description || "";
+
       itemDiv.innerHTML = `
-        <div>
-          <h3>${item.name || "Unnamed Product"}</h3>
-          <p>Price: ₹${item.price || 0}</p>
+        <img src="${image}" alt="${name}" />
+        <div class="cart-item-details">
+          <h3>${name}</h3>
+          <p>${desc}</p>
+          <p>Price: ₹${price}</p>
         </div>
         <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
       `;
+
       cartContainer.appendChild(itemDiv);
 
-      total += Number(item.price) || 0;
-      orderText += `${index + 1}. ${item.name} - ₹${item.price}\n`;
+      total += price;
+      orderText += `${index + 1}. ${name} - ₹${price}\n`;
     });
 
     document.getElementById("totalPrice").textContent = "Total: ₹" + total;
@@ -173,20 +194,20 @@
   }
 
   function removeItem(index) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.splice(index, 1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
+    cartItems.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    updateCartDisplay();
   }
 
-  renderCart();
+  // Load cart initially
+  updateCartDisplay();
 
-  // Submit to Google Form
+  // Handle order submission
   document.getElementById("placeOrderBtn").addEventListener("click", function () {
     const name = document.getElementById("customerName").value.trim();
     const address = document.getElementById("customerAddress").value.trim();
     const phone = document.getElementById("customerPhone").value.trim();
-    const orderDetailsText = document.getElementById("orderDetails").textContent;
+    const orderDetailsText = orderDetails.textContent;
     const totalPrice = document.getElementById("totalPrice").textContent;
 
     if (!name || !address || !phone) {
