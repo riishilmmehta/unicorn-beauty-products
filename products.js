@@ -1,72 +1,72 @@
 const products = [
   {
     id: 1,
-    name: "Cool Coconut Hair Oil",
-    image: "images/coconut_oil.jpg",
-    description: "A nourishing hair oil that strengthens your roots and gives your hair a silky shine. Made from 100% natural coconut extracts. Keeps your scalp cool and hydrated. Ideal for all hair types. Free from parabens and chemicals.",
-    price: 150
+    name: "Cool Coconut Hair Oil (200ml)",
+    price: 150,
+    image: "images/product1.jpg",
+    description: "A refreshing natural coconut oil that strengthens hair roots, adds shine, and nourishes scalp. Perfect for daily use. Lightly scented. Non-sticky and 100% natural. Trusted by thousands."
   },
   {
     id: 2,
-    name: "Charcoal Soap",
-    image: "images/charcoal_soap.jpg",
-    description: "Detox your skin with our handmade charcoal soap. Pulls out impurities and pollutants. Leaves your skin feeling fresh and smooth. Gentle on sensitive skin. Suitable for daily use.",
-    price: 60
+    name: "Charcoal Soap (120g)",
+    price: 60,
+    image: "images/product2.jpg",
+    description: "Deep cleansing charcoal soap that removes dirt and toxins from the skin. Ideal for oily skin types. Leaves skin fresh and smooth. Handmade with love. Best for detoxifying skin."
   },
   {
     id: 3,
-    name: "Lemongrass Oil",
-    image: "images/lemongrass_oil.jpg",
-    description: "Refreshing lemongrass essential oil that relaxes your senses. Great for massages and aroma therapy. Helps relieve stress and headaches. Made from pure lemongrass extract. Soothing and calming.",
-    price: 299
+    name: "Lemongrass Oil (100ml)",
+    price: 299,
+    image: "images/product3.jpg",
+    description: "Refreshing lemongrass oil for aromatherapy and skincare. Uplifts mood, reduces stress, and hydrates skin. Add to bath or use in diffuser. 100% pure and organic."
   },
   {
     id: 4,
-    name: "Aloe Vera Gel",
-    image: "images/aloe_vera_gel.jpg",
-    description: "Pure Aloe Vera Gel for face and hair. Hydrates and repairs dry skin. Helps with acne, scars, and sunburn. Can be used as a moisturizer or hair mask. No added color or fragrance.",
-    price: 50
+    name: "Aloe Vera Gel (100ml)",
+    price: 50,
+    image: "images/product4.jpg",
+    description: "Soothing aloe vera gel for face and hair. Cools skin, heals sunburn, and reduces acne. Lightweight and fast-absorbing. Ideal for all skin types. Use daily for glowing skin."
   },
   {
     id: 5,
-    name: "Jasmine Soap",
-    image: "images/jasmine_soap.jpg",
-    description: "Luxurious jasmine-scented handmade soap. Gently cleanses and nourishes the skin. Leaves a long-lasting floral fragrance. Perfect for everyday pampering. Sulfate-free and cruelty-free.",
-    price: 70
+    name: "Jasmine Soap (120g)",
+    price: 70,
+    image: "images/product5.jpg",
+    description: "Mild and fragrant jasmine soap that leaves your skin soft and floral-scented. Handmade and chemical-free. Suits all skin types. A treat for your senses. Gift-ready packaging."
   },
   {
     id: 6,
-    name: "Lavender Soap",
-    image: "images/lavender_soap.jpg",
-    description: "Calming lavender soap with essential oils. Helps you relax after a long day. Moisturizes and softens skin. Natural and handmade with care. Suitable for all skin types.",
-    price: 70
+    name: "Lavender Soap (150g)",
+    price: 70,
+    image: "images/product6.jpg",
+    description: "Calming lavender soap with essential oils to relax your mind and pamper your skin. Rich creamy lather. Soothes irritated skin. Perfect for night-time showers."
   },
   {
     id: 7,
-    name: "Coffee Soap",
-    image: "images/coffee_soap.jpg",
-    description: "Awaken your senses with exfoliating coffee soap. Helps reduce cellulite and energize the skin. Leaves you feeling fresh and invigorated. Crafted from real coffee beans. Smells amazing!",
-    price: 99
+    name: "Coffee Soap (120g)",
+    price: 99,
+    image: "images/product7.jpg",
+    description: "Energizing coffee soap that exfoliates and tightens skin. Removes dead cells and improves circulation. Smells like fresh coffee! Great for morning showers."
   },
   {
     id: 8,
-    name: "Rose Soap",
-    image: "images/rose_soap.jpg",
-    description: "Gentle rose soap with a romantic floral scent. Cleanses and rejuvenates the skin. Keeps skin smooth and glowing. Made with natural rose essence. Soft and creamy texture.",
-    price: 50
+    name: "Rose Soap (120g)",
+    price: 50,
+    image: "images/product8.jpg",
+    description: "Romantic rose soap with natural rose extracts. Makes your skin soft, smooth, and delicately scented. A luxurious experience. Handmade with love and care."
   },
   {
     id: 9,
-    name: "Aloe Vera Soap",
-    image: "images/aloe_vera_soap.jpg",
-    description: "A soothing aloe vera soap bar perfect for sensitive skin. Heals and protects your skin barrier. Refreshing and cooling properties. Ideal for summer use. Made from real aloe vera.",
-    price: 119
+    name: "Aloe Vera Soap (120g)",
+    price: 119,
+    image: "images/product9.jpg",
+    description: "Aloe vera infused soap to hydrate and protect your skin. Soothes burns and irritation. Natural ingredients only. Safe for children and adults."
   },
   {
     id: 10,
-    name: "Turmeric Soap",
-    image: "images/turmeric_soap.jpg",
-    description: "Brightening turmeric soap that helps reduce blemishes and acne. Natural antiseptic. Gives your skin a warm, golden glow. Suitable for face and body. A traditional herbal remedy.",
-    price: 199
+    name: "Turmeric Soap (120g)",
+    price: 199,
+    image: "images/product10.jpg",
+    description: "Healing turmeric soap that brightens skin and reduces pigmentation. Antibacterial and anti-inflammatory. Great for acne-prone skin. Made with real turmeric."
   }
 ];
