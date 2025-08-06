@@ -13,6 +13,7 @@
       padding: 0;
     }
 
+    /* Navigation Bar */
     .navbar {
       display: flex;
       justify-content: flex-end;
@@ -37,48 +38,55 @@
       color: #ff69b4;
     }
 
+    /* Product Grid */
     .shop-container {
       max-width: 1200px;
       margin: 50px auto;
       padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 30px;
     }
 
     .product-card {
       background: #fff;
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .product-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
     .product-card img {
       width: 100%;
-      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
     }
 
     .product-card h3 {
       color: #d63384;
       font-size: 1.1rem;
-      margin-top: 10px;
+      margin-top: 12px;
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
 
+  <!-- Navigation -->
   <div class="navbar">
     <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
     <a href="cart.html">My Cart</a>
   </div>
 
+  <!-- Products -->
   <div class="shop-container" id="product-list"></div>
 
   <script src="productdata.js"></script>
