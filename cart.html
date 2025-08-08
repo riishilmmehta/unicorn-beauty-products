@@ -7,148 +7,146 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      background: #fff0f5;
+      background: #fff;
       font-family: 'Segoe UI', sans-serif;
+      color: #333;
       margin: 0;
       padding: 0;
     }
 
     header {
+      background: linear-gradient(to right, #ff66cc, #cc66ff, #66ccff);
+      padding: 10px 20px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: linear-gradient(90deg, #f9e1ff, #fcefff);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      justify-content: flex-end;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    header h1 {
-      font-size: 1.5rem;
-      color: #cc00cc;
-      font-weight: 700;
-    }
-
-    header nav a {
-      margin-left: 1.5rem;
+    header a {
+      color: white;
       text-decoration: none;
-      color: #aa00aa;
       font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    header a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     .container {
-      padding: 2rem;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     .cart-item {
-      background: #ffffff;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .cart-item img {
       width: 100px;
       height: 100px;
+      border-radius: 10px;
       object-fit: cover;
-      border-radius: 8px;
+    }
+
+    .cart-item-details {
+      flex: 1;
     }
 
     .cart-item-details h3 {
       margin: 0;
-      color: #aa00aa;
+      font-size: 1.2em;
     }
 
     .cart-item-details p {
-      margin: 4px 0;
+      margin: 5px 0;
     }
 
-    #totalPrice {
-      font-size: 1.2rem;
+    .remove-btn {
+      margin-top: 10px;
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background: #cc0000;
+    }
+
+    .total-price {
+      font-size: 1.5em;
+      text-align: center;
+      margin-top: 20px;
       font-weight: bold;
-      margin-top: 1rem;
     }
 
     .form-section {
-      margin-top: 2rem;
-      background: #fff;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      margin-top: 30px;
     }
 
-    .form-section h2 {
-      color: #990099;
-    }
-
-    .form-section input {
+    iframe {
       width: 100%;
-      padding: 10px;
-      margin: 0.5rem 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    #placeOrderBtn {
-      background: #ff66cc;
-      color: white;
-      padding: 12px 24px;
+      height: 500px;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-
-    #placeOrderBtn:hover {
-      background: #e055b3;
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Unicorn Beauty</h1>
-  <nav>
+  <header>
     <a href="index.html">Home</a>
     <a href="shop.html">Shop</a>
     <a href="cart.html">My Cart</a>
-  </nav>
-</header>
+  </header>
 
-<div class="container">
-  <h2>Your Cart</h2>
-  <div id="cartItems"></div>
-  <div id="totalPrice">Total: ₹0</div>
+  <div class="container">
+    <h1>🛒 Your Cart</h1>
+    <div id="cart-items"></div>
+    <div class="total-price" id="total-price"></div>
 
-  <div class="form-section">
-    <h2>Order Details</h2>
-    <input type="text" id="customerName" placeholder="Your Name" required />
-    <input type="text" id="customerAddress" placeholder="Your Address" required />
-    <input type="tel" id="customerPhone" placeholder="Your Phone Number" required />
-    <div id="orderDetails" style="display:none;"></div>
-    <button id="placeOrderBtn">Place Order</button>
+    <div class="form-section">
+      <h2>Place Your Order</h2>
+      <!-- Replace with your actual Google Form URL -->
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdG_fake_form_link/viewform?embedded=true">
+        Loading…
+      </iframe>
+    </div>
   </div>
-</div>
 
-<script src="products.js"></script>
-<script>
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartContainer = document.getElementById("cartItems");
-  const orderDetails = document.getElementById("orderDetails");
-  let total = 0;
-  let orderText = "";
+  <script src="products.js"></script>
+  <script>
+    const cartContainer = document.getElementById("cart-items");
+    const totalDisplay = document.getElementById("total-price");
 
-  function getProductById(id) {
-    return products.find(p => p.id === id);
-  }
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (cartItems.length === 0) {
-    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-  } else {
+    let total = 0;
+
+    function getProductById(id) {
+      return products.find(p => p.id === id);
+    }
+
     cartItems.forEach((cartItem, index) => {
       const product = getProductById(cartItem.id);
       if (product) {
@@ -160,59 +158,26 @@
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>Price: ₹${product.price}</p>
+            <button class="remove-btn" data-index="${index}">Remove</button>
           </div>
         `;
         cartContainer.appendChild(itemDiv);
 
         total += product.price;
-        orderText += `${index + 1}. ${product.name} - ₹${product.price}\n`;
       }
     });
-  }
 
-  document.getElementById("totalPrice").textContent = "Total: ₹" + total;
-  orderDetails.textContent = orderText;
+    totalDisplay.textContent = `Total: ₹${total}`;
 
-  document.getElementById("placeOrderBtn").addEventListener("click", function () {
-    const name = document.getElementById("customerName").value.trim();
-    const address = document.getElementById("customerAddress").value.trim();
-    const phone = document.getElementById("customerPhone").value.trim();
-    const orderDetailsText = orderDetails.textContent;
-    const totalPrice = document.getElementById("totalPrice").textContent;
-
-    if (!name || !address || !phone) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-
-    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSe1bK6Z1xtVaI94atURsL2nqe1BAwRh7xu3-apQ5rVL1uHGfw/formResponse";
-
-    const formData = new URLSearchParams();
-    formData.append("entry.827206533", name);
-    formData.append("entry.356442838", address);
-    formData.append("entry.691750688", phone);
-    formData.append("entry.1848509211", orderDetailsText);
-    formData.append("entry.670221473", totalPrice);
-
-    fetch(formURL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formData.toString(),
-    })
-    .then(() => {
-      alert("Order placed successfully!");
-      localStorage.removeItem("cart");
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      alert("There was an error placing your order. Please try again.");
-      console.error("Error:", error);
+    // Remove item handler
+    document.querySelectorAll(".remove-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        const indexToRemove = parseInt(this.getAttribute("data-index"));
+        cartItems.splice(indexToRemove, 1);
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        location.reload();
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
